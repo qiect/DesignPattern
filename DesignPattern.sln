@@ -5,7 +5,9 @@ VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "单例模式", "单例模式\单例模式.csproj", "{EF2561BE-BBE9-4FAD-997D-2452F8A44ECD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "策略模式", "策略模式\策略模式.csproj", "{43E33A73-7D0F-44A4-A6F9-2DA9FC55BF10}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "策略模式", "策略模式\策略模式.csproj", "{43E33A73-7D0F-44A4-A6F9-2DA9FC55BF10}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "中介者模式", "中介者模式\中介者模式.csproj", "{0576C157-7AE6-4557-93A0-628A458ED89D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{43E33A73-7D0F-44A4-A6F9-2DA9FC55BF10}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{43E33A73-7D0F-44A4-A6F9-2DA9FC55BF10}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{43E33A73-7D0F-44A4-A6F9-2DA9FC55BF10}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0576C157-7AE6-4557-93A0-628A458ED89D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0576C157-7AE6-4557-93A0-628A458ED89D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0576C157-7AE6-4557-93A0-628A458ED89D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0576C157-7AE6-4557-93A0-628A458ED89D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
