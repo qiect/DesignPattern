@@ -1,5 +1,38 @@
+/**
+ * 备忘录模式 (Memento Pattern)
+ * 
+ * 定义：在不破坏封装性的前提下，捕获一个对象的内部状态，并在该对象之外保存这个状态。
+ *       这样以后就可将该对象恢复到原先保存的状态。
+ * 
+ * 核心角色：
+ * 1. 备忘录(Memento) - 存储发起人对象的内部状态
+ * 2. 发起人(Originator) - 创建一个备忘录，记录当前内部状态
+ * 3. 管理者(Caretaker) - 负责保存备忘录，但不能对备忘录内容进行操作
+ * 
+ * 适用场景：
+ * - 必须保存一个对象在某一个时刻的状态
+ * - 不希望暴露对象内部状态
+ * - 需要实现撤销功能
+ * 
+ * 本示例展示了三个场景：
+ * 1. 文本编辑器撤销功能 - 栈式历史记录
+ * 2. 游戏存档系统 - 多槽位存档
+ * 3. 联系人信息备份 - 状态快照
+ */
+
 namespace 备忘录模式;
 
+#region 场景1: 文本编辑器撤销功能
+
+/// <summary>
+/// 备忘录 - 编辑器状态备忘录
+/// 存储编辑器的内部状态
+/// 
+/// 关键点：
+/// - 不可变对象，创建后不能修改
+/// - 只暴露必要的信息
+/// - 保护发起人的封装性
+/// </summary>
 public class EditorMemento
 {
     public string Content { get; }
@@ -14,6 +47,15 @@ public class EditorMemento
     }
 }
 
+/// <summary>
+/// 发起人 - 文本编辑器
+/// 创建备忘录保存状态，也可以从备忘录恢复状态
+/// 
+/// 关键点：
+/// - Save() 创建备忘录
+/// - Restore() 从备忘录恢复
+/// - 备忘录由管理者保存
+/// </summary>
 public class TextEditor
 {
     private string _content = string.Empty;
@@ -48,12 +90,18 @@ public class TextEditor
         }
     }
     
+    /// <summary>
+    /// 创建备忘录 - 保存当前状态
+    /// </summary>
     public EditorMemento Save()
     {
         Console.WriteLine($"保存状态: \"{_content}\"");
         return new EditorMemento(_content, _cursorPosition);
     }
     
+    /// <summary>
+    /// 从备忘录恢复状态
+    /// </summary>
     public void Restore(EditorMemento memento)
     {
         _content = memento.Content;
@@ -70,6 +118,14 @@ public class TextEditor
     }
 }
 
+/// <summary>
+/// 管理者 - 编辑器历史记录
+/// 负责保存和管理备忘录
+/// 
+/// 关键点：
+/// - 只负责保存备忘录，不修改内容
+/// - 使用栈实现撤销历史
+/// </summary>
 public class EditorHistory
 {
     private readonly Stack<EditorMemento> _history = new();
@@ -87,6 +143,13 @@ public class EditorHistory
     public bool HasHistory => _history.Count > 0;
 }
 
+#endregion
+
+#region 场景2: 游戏存档系统
+
+/// <summary>
+/// 备忘录 - 游戏状态
+/// </summary>
 public class GameState
 {
     public int Level { get; }
@@ -108,6 +171,9 @@ public class GameState
     }
 }
 
+/// <summary>
+/// 发起人 - 游戏
+/// </summary>
 public class Game
 {
     private int _level = 1;
@@ -137,12 +203,18 @@ public class Game
         Console.WriteLine($"当前状态: {this}");
     }
     
+    /// <summary>
+    /// 保存游戏状态
+    /// </summary>
     public GameState SaveGame()
     {
         Console.WriteLine($"\n保存游戏: {this}");
         return new GameState(_level, _score, _health, _location);
     }
     
+    /// <summary>
+    /// 加载游戏状态
+    /// </summary>
     public void LoadGame(GameState state)
     {
         _level = state.Level;
@@ -158,6 +230,10 @@ public class Game
     }
 }
 
+/// <summary>
+/// 管理者 - 游戏存档管理器
+/// 支持多槽位存档
+/// </summary>
 public class GameSaveManager
 {
     private readonly Dictionary<string, GameState> _saves = new();
@@ -189,6 +265,13 @@ public class GameSaveManager
     }
 }
 
+#endregion
+
+#region 场景3: 联系人信息备份
+
+/// <summary>
+/// 发起人 - 联系人
+/// </summary>
 public class Contact
 {
     public string Name { get; }
@@ -202,11 +285,17 @@ public class Contact
         Email = email;
     }
     
+    /// <summary>
+    /// 保存联系人状态
+    /// </summary>
     public ContactMemento Save()
     {
         return new ContactMemento(Name, Phone, Email);
     }
     
+    /// <summary>
+    /// 恢复联系人状态
+    /// </summary>
     public void Restore(ContactMemento memento)
     {
         var type = typeof(Contact);
@@ -218,6 +307,9 @@ public class Contact
     public override string ToString() => $"{Name} - {Phone} - {Email}";
 }
 
+/// <summary>
+/// 备忘录 - 联系人备忘录
+/// </summary>
 public class ContactMemento
 {
     public string Name { get; }
@@ -232,12 +324,15 @@ public class ContactMemento
     }
 }
 
+#endregion
+
 class Program
 {
     static void Main(string[] args)
     {
         Console.WriteLine("=== 备忘录模式示例 ===\n");
         
+        #region 场景1演示
         Console.WriteLine("场景1: 文本编辑器撤销功能\n");
         
         var editor = new TextEditor();
@@ -268,8 +363,11 @@ class Program
             var state = history.Pop();
             if (state != null) editor.Restore(state);
         }
+        #endregion
         
         Console.WriteLine("\n----------------------------------------\n");
+        
+        #region 场景2演示
         Console.WriteLine("场景2: 游戏存档系统\n");
         
         var game = new Game();
@@ -290,8 +388,11 @@ class Program
         Console.WriteLine("\n--- 加载存档1 ---");
         var save1 = saveManager.Load("存档1");
         if (save1 != null) game.LoadGame(save1);
+        #endregion
         
         Console.WriteLine("\n----------------------------------------\n");
+        
+        #region 场景3演示
         Console.WriteLine("场景3: 联系人信息备份\n");
         
         var contact = new Contact("张三", "13800138000", "zhangsan@example.com");
@@ -300,6 +401,7 @@ class Program
         var backup = contact.Save();
         
         Console.WriteLine("\n修改联系人信息...");
+        #endregion
         
         Console.WriteLine("\n备忘录模式优点:");
         Console.WriteLine("- 不破坏封装性,保存内部状态");

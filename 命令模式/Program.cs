@@ -1,11 +1,50 @@
+/**
+ * 命令模式 (Command Pattern)
+ * 
+ * 定义：将一个请求封装为一个对象，从而使你可用不同的请求对客户进行参数化；
+ *       对请求排队或记录请求日志，以及支持可撤销的操作。
+ * 
+ * 核心角色：
+ * 1. 抽象命令(Command) - 声明执行操作的接口
+ * 2. 具体命令(Concrete Command) - 将一个接收者对象绑定于一个动作，调用接收者相应的操作
+ * 3. 调用者(Invoker) - 要求该命令执行这个请求
+ * 4. 接收者(Receiver) - 知道如何实施与执行一个请求相关的操作
+ * 
+ * 适用场景：
+ * - 需要将请求调用者和接收者解耦
+ * - 需要在不同的时间指定请求、排队请求
+ * - 需要支持撤销操作
+ * - 需要支持修改日志
+ * 
+ * 本示例展示了三个场景：
+ * 1. 智能家居遥控器 - 支持撤销操作
+ * 2. 文本编辑器 - 撤销/重做
+ * 3. 宏命令 - 批量执行
+ */
+
 namespace 命令模式;
 
+/// <summary>
+/// 抽象命令 - 定义执行和撤销接口
+/// </summary>
 public interface ICommand
 {
+    /// <summary>
+    /// 执行命令
+    /// </summary>
     void Execute();
+    
+    /// <summary>
+    /// 撤销命令
+    /// </summary>
     void Undo();
 }
 
+#region 场景1: 智能家居遥控器
+
+/// <summary>
+/// 接收者 - 灯
+/// </summary>
 public class Light
 {
     public void TurnOn()
@@ -19,6 +58,9 @@ public class Light
     }
 }
 
+/// <summary>
+/// 具体命令 - 开灯命令
+/// </summary>
 public class LightOnCommand : ICommand
 {
     private readonly Light _light;
@@ -39,6 +81,9 @@ public class LightOnCommand : ICommand
     }
 }
 
+/// <summary>
+/// 具体命令 - 关灯命令
+/// </summary>
 public class LightOffCommand : ICommand
 {
     private readonly Light _light;
@@ -59,6 +104,9 @@ public class LightOffCommand : ICommand
     }
 }
 
+/// <summary>
+/// 接收者 - 空调
+/// </summary>
 public class AirConditioner
 {
     public void TurnOn()
@@ -77,6 +125,9 @@ public class AirConditioner
     }
 }
 
+/// <summary>
+/// 具体命令 - 开空调命令（带参数）
+/// </summary>
 public class AirConditionerOnCommand : ICommand
 {
     private readonly AirConditioner _ac;
@@ -100,6 +151,9 @@ public class AirConditionerOnCommand : ICommand
     }
 }
 
+/// <summary>
+/// 具体命令 - 关空调命令
+/// </summary>
 public class AirConditionerOffCommand : ICommand
 {
     private readonly AirConditioner _ac;
@@ -120,12 +174,24 @@ public class AirConditionerOffCommand : ICommand
     }
 }
 
+/// <summary>
+/// 空命令 - 用于初始化，避免空指针
+/// </summary>
 public class NoCommand : ICommand
 {
     public void Execute() { }
     public void Undo() { }
 }
 
+/// <summary>
+/// 调用者 - 遥控器
+/// 持有命令对象，负责调用命令执行
+/// 
+/// 关键点：
+/// - 将命令对象参数化
+/// - 支持撤销操作
+/// - 命令的调用者不需要知道具体实现
+/// </summary>
 public class RemoteControl
 {
     private readonly ICommand[] _onCommands;
@@ -170,6 +236,13 @@ public class RemoteControl
     }
 }
 
+#endregion
+
+#region 场景2: 文本编辑器
+
+/// <summary>
+/// 接收者 - 文本编辑器
+/// </summary>
 public class TextEditor
 {
     private string _text = string.Empty;
@@ -192,6 +265,9 @@ public class TextEditor
     public string GetText() => _text;
 }
 
+/// <summary>
+/// 具体命令 - 写入命令
+/// </summary>
 public class WriteCommand : ICommand
 {
     private readonly TextEditor _editor;
@@ -214,6 +290,9 @@ public class WriteCommand : ICommand
     }
 }
 
+/// <summary>
+/// 具体命令 - 删除命令
+/// </summary>
 public class DeleteCommand : ICommand
 {
     private readonly TextEditor _editor;
@@ -245,6 +324,18 @@ public class DeleteCommand : ICommand
     }
 }
 
+#endregion
+
+#region 场景3: 宏命令
+
+/// <summary>
+/// 具体命令 - 宏命令
+/// 组合多个命令，批量执行
+/// 
+/// 关键点：
+/// - 将多个命令组合成一个命令
+/// - 支持批量执行和批量撤销
+/// </summary>
 public class MacroCommand : ICommand
 {
     private readonly List<ICommand> _commands = new();
@@ -264,6 +355,7 @@ public class MacroCommand : ICommand
     
     public void Undo()
     {
+        // 撤销时按相反顺序执行
         for (int i = _commands.Count - 1; i >= 0; i--)
         {
             _commands[i].Undo();
@@ -271,12 +363,15 @@ public class MacroCommand : ICommand
     }
 }
 
+#endregion
+
 class Program
 {
     static void Main(string[] args)
     {
         Console.WriteLine("=== 命令模式示例 ===\n");
         
+        #region 场景1演示
         Console.WriteLine("场景1: 智能家居遥控器\n");
         
         var remote = new RemoteControl(3);
@@ -300,8 +395,11 @@ class Program
         
         Console.WriteLine("\n--- 关闭客厅灯 ---");
         remote.OffButtonPressed(0);
+        #endregion
         
         Console.WriteLine("\n----------------------------------------\n");
+        
+        #region 场景2演示
         Console.WriteLine("场景2: 文本编辑器\n");
         
         var editor = new TextEditor();
@@ -319,8 +417,11 @@ class Program
         
         Console.WriteLine("\n--- 撤销删除 ---");
         deleteCmd.Undo();
+        #endregion
         
         Console.WriteLine("\n----------------------------------------\n");
+        
+        #region 场景3演示
         Console.WriteLine("场景3: 宏命令\n");
         
         var light = new Light();
@@ -341,6 +442,7 @@ class Program
         
         Console.WriteLine("\n--- 一键关闭所有设备 ---");
         allOff.Execute();
+        #endregion
         
         Console.WriteLine("\n命令模式优点:");
         Console.WriteLine("- 将请求封装为对象");

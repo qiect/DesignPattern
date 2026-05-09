@@ -1,15 +1,54 @@
+/**
+ * 建造者模式 (Builder Pattern)
+ * 
+ * 定义：将一个复杂对象的构建与它的表示分离，使得同样的构建过程可以创建不同的表示。
+ * 
+ * 核心角色：
+ * 1. 产品(Product) - 要构建的复杂对象
+ * 2. 抽象建造者(Builder) - 定义创建产品各个部件的抽象接口
+ * 3. 具体建造者(Concrete Builder) - 实现Builder接口，构造和装配各个部件
+ * 4. 指挥者(Director) - 构建一个使用Builder接口的对象
+ * 
+ * 适用场景：
+ * - 创建复杂对象，对象有多个组成部分
+ * - 需要创建的对象有很多可选配置
+ * - 构建过程需要分步进行
+ * 
+ * 本示例场景：电脑配置组装系统，支持不同配置的电脑组装
+ */
+
 namespace 建造者模式;
 
+/// <summary>
+/// 产品类 - 电脑
+/// 包含多个配置属性，代表复杂对象
+/// </summary>
 public class Computer
 {
+    /// <summary>CPU - 必需配置</summary>
     public string? CPU { get; set; }
+    
+    /// <summary>内存 - 必需配置</summary>
     public string? RAM { get; set; }
+    
+    /// <summary>存储 - 必需配置</summary>
     public string? Storage { get; set; }
+    
+    /// <summary>显卡 - 可选配置</summary>
     public string? GPU { get; set; }
+    
+    /// <summary>显示器 - 可选配置</summary>
     public string? Monitor { get; set; }
+    
+    /// <summary>WiFi - 可选配置</summary>
     public bool HasWiFi { get; set; }
+    
+    /// <summary>蓝牙 - 可选配置</summary>
     public bool HasBluetooth { get; set; }
     
+    /// <summary>
+    /// 显示电脑配置信息
+    /// </summary>
     public void ShowConfiguration()
     {
         Console.WriteLine("电脑配置:");
@@ -23,6 +62,15 @@ public class Computer
     }
 }
 
+/// <summary>
+/// 抽象建造者 - 电脑建造者接口
+/// 定义构建电脑各个部件的方法
+/// 
+/// 关键点：
+/// - 返回 IComputerBuilder 支持链式调用
+/// - 定义构建各个部件的抽象方法
+/// - Build() 方法返回最终产品
+/// </summary>
 public interface IComputerBuilder
 {
     IComputerBuilder SetCPU(string cpu);
@@ -35,6 +83,15 @@ public interface IComputerBuilder
     Computer Build();
 }
 
+/// <summary>
+/// 具体建造者 - 电脑建造者实现
+/// 实现构建电脑各个部件的具体逻辑
+/// 
+/// 关键点：
+/// - 内部维护一个 Computer 对象
+/// - 每个设置方法返回 this，支持链式调用
+/// - Build() 方法进行验证并返回产品
+/// </summary>
 public class ComputerBuilder : IComputerBuilder
 {
     private readonly Computer _computer = new();
@@ -81,6 +138,10 @@ public class ComputerBuilder : IComputerBuilder
         return this;
     }
     
+    /// <summary>
+    /// 构建最终产品
+    /// 进行必要的验证，确保必需配置已设置
+    /// </summary>
     public Computer Build()
     {
         if (string.IsNullOrEmpty(_computer.CPU))
@@ -94,8 +155,20 @@ public class ComputerBuilder : IComputerBuilder
     }
 }
 
+/// <summary>
+/// 指挥者 - 电脑组装指导
+/// 封装常用的电脑配置方案
+/// 
+/// 关键点：
+/// - 定义标准的构建流程
+/// - 客户端可以直接使用预设方案
+/// - 也可以自定义配置
+/// </summary>
 public class ComputerDirector
 {
+    /// <summary>
+    /// 构建办公电脑 - 基础配置
+    /// </summary>
     public Computer BuildOfficeComputer(IComputerBuilder builder)
     {
         return builder
@@ -107,6 +180,9 @@ public class ComputerDirector
             .Build();
     }
     
+    /// <summary>
+    /// 构建游戏电脑 - 高性能配置
+    /// </summary>
     public Computer BuildGamingComputer(IComputerBuilder builder)
     {
         return builder
@@ -120,6 +196,9 @@ public class ComputerDirector
             .Build();
     }
     
+    /// <summary>
+    /// 构建服务器 - 企业级配置
+    /// </summary>
     public Computer BuildServerComputer(IComputerBuilder builder)
     {
         return builder
@@ -143,6 +222,7 @@ class Program
         var director = new ComputerDirector();
         var builder = new ComputerBuilder();
         
+        // 使用指挥者构建预设配置
         Console.WriteLine("--- 办公电脑 ---");
         var officeComputer = director.BuildOfficeComputer(builder);
         officeComputer.ShowConfiguration();
@@ -157,6 +237,7 @@ class Program
         var serverComputer = director.BuildServerComputer(builder);
         serverComputer.ShowConfiguration();
         
+        // 自定义配置 - 不使用指挥者
         Console.WriteLine("\n--- 自定义电脑 ---");
         builder = new ComputerBuilder();
         var customComputer = builder
