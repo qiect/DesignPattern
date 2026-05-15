@@ -1,21 +1,27 @@
 <Solution>
-  <Project Path="单例模式/单例模式.csproj" />
-  <Project Path="策略模式/策略模式.csproj" />
-  <Project Path="中介者模式/中介者模式.csproj" />
-  <Project Path="工厂方法模式/工厂方法模式.csproj" />
-  <Project Path="抽象工厂模式/抽象工厂模式.csproj" />
-  <Project Path="建造者模式/建造者模式.csproj" />
-  <Project Path="原型模式/原型模式.csproj" />
-  <Project Path="适配器模式/适配器模式.csproj" />
-  <Project Path="桥接模式/桥接模式.csproj" />
-  <Project Path="装饰模式/装饰模式.csproj" />
-  <Project Path="外观模式/外观模式.csproj" />
-  <Project Path="代理模式/代理模式.csproj" />
-  <Project Path="观察者模式/观察者模式.csproj" />
-  <Project Path="命令模式/命令模式.csproj" />
-  <Project Path="责任链模式/责任链模式.csproj" />
-  <Project Path="状态模式/状态模式.csproj" />
-  <Project Path="模板方法模式/模板方法模式.csproj" />
-  <Project Path="迭代器模式/迭代器模式.csproj" />
-  <Project Path="备忘录模式/备忘录模式.csproj" />
+  <Folder Name="/创建型模式/">
+    <Project Path="单例模式/单例模式.csproj" />
+    <Project Path="原型模式/原型模式.csproj" />
+    <Project Path="工厂方法模式/工厂方法模式.csproj" />
+    <Project Path="建造者模式/建造者模式.csproj" />
+    <Project Path="抽象工厂模式/抽象工厂模式.csproj" />
+  </Folder>
+  <Folder Name="/结构性模式/">
+    <Project Path="代理模式/代理模式.csproj" />
+    <Project Path="桥接模式/桥接模式.csproj" />
+    <Project Path="装饰模式/装饰模式.csproj" />
+    <Project Path="适配器模式/适配器模式.csproj" />
+  </Folder>
+  <Folder Name="/行为性模式/">
+    <Project Path="中介者模式/中介者模式.csproj" />
+    <Project Path="命令模式/命令模式.csproj" />
+    <Project Path="备忘录模式/备忘录模式.csproj" />
+    <Project Path="外观模式/外观模式.csproj" />
+    <Project Path="模板方法模式/模板方法模式.csproj" />
+    <Project Path="状态模式/状态模式.csproj" />
+    <Project Path="策略模式/策略模式.csproj" />
+    <Project Path="观察者模式/观察者模式.csproj" />
+    <Project Path="责任链模式/责任链模式.csproj" />
+    <Project Path="迭代器模式/迭代器模式.csproj" />
+  </Folder>
 </Solution>
