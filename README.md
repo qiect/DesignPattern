@@ -1,6 +1,6 @@
 # DesignPattern
 
-C# 设计模式示例项目，包含 19 种经典设计模式的完整实现和详细注释。
+C# 设计模式示例项目，包含 GoF 23 种经典设计模式的完整实现和详细注释。
 
 ## 项目概述
 
@@ -12,7 +12,7 @@ C# 设计模式示例项目，包含 19 种经典设计模式的完整实现和�
 
 ## 设计模式分类
 
-### 创建型模式 (Creational Patterns)
+### 创建型模式 (Creational Patterns) - 5 种
 
 | 模式 | 说明 | 项目路径 |
 |------|------|----------|
@@ -22,17 +22,19 @@ C# 设计模式示例项目，包含 19 种经典设计模式的完整实现和�
 | 建造者模式 | 将复杂对象的构建与表示分离 | [建造者模式](./建造者模式) |
 | 原型模式 | 通过复制现有对象创建新对象 | [原型模式](./原型模式) |
 
-### 结构型模式 (Structural Patterns)
+### 结构型模式 (Structural Patterns) - 7 种
 
 | 模式 | 说明 | 项目路径 |
 |------|------|----------|
 | 适配器模式 | 将一个类的接口转换成另一个接口 | [适配器模式](./适配器模式) |
 | 桥接模式 | 将抽象部分与实现部分分离 | [桥接模式](./桥接模式) |
+| 组合模式 | 将对象组合成树形结构 | [组合模式](./组合模式) |
 | 装饰模式 | 动态地给对象添加额外职责 | [装饰模式](./装饰模式) |
 | 外观模式 | 为子系统提供统一的接口 | [外观模式](./外观模式) |
+| 享元模式 | 运用共享技术支持大量细粒度对象 | [享元模式](./享元模式) |
 | 代理模式 | 控制对对象的访问 | [代理模式](./代理模式) |
 
-### 行为型模式 (Behavioral Patterns)
+### 行为型模式 (Behavioral Patterns) - 11 种
 
 | 模式 | 说明 | 项目路径 |
 |------|------|----------|
@@ -45,6 +47,8 @@ C# 设计模式示例项目，包含 19 种经典设计模式的完整实现和�
 | 模板方法模式 | 定义算法骨架，延迟部分步骤到子类 | [模板方法模式](./模板方法模式) |
 | 迭代器模式 | 提供顺序访问聚合对象元素的方法 | [迭代器模式](./迭代器模式) |
 | 备忘录模式 | 在不破坏封装的前提下捕获对象状态 | [备忘录模式](./备忘录模式) |
+| 解释器模式 | 定义语言的文法表示和解释器 | [解释器模式](./解释器模式) |
+| 访问者模式 | 在不改变类的前提下定义新操作 | [访问者模式](./访问者模式) |
 
 ## 环境要求
 
@@ -81,46 +85,37 @@ dotnet build DesignPattern.slnx
 
 ```
 DesignPattern/
-├── DesignPattern.slnx          # VS2026 解决方案文件
-├── README.md                   # 项目说明文档
-├── 单例模式/                   # Singleton Pattern
-│   └── Program.cs
-├── 策略模式/                   # Strategy Pattern
-│   └── Program.cs
-├── 中介者模式/                 # Mediator Pattern
-│   └── Program.cs
-├── 工厂方法模式/               # Factory Method Pattern
-│   └── Program.cs
-├── 抽象工厂模式/               # Abstract Factory Pattern
-│   └── Program.cs
-├── 建造者模式/                 # Builder Pattern
-│   └── Program.cs
-├── 原型模式/                   # Prototype Pattern
-│   └── Program.cs
-├── 适配器模式/                 # Adapter Pattern
-│   └── Program.cs
-├── 桥接模式/                   # Bridge Pattern
-│   └── Program.cs
-├── 装饰模式/                   # Decorator Pattern
-│   └── Program.cs
-├── 外观模式/                   # Facade Pattern
-│   └── Program.cs
-├── 代理模式/                   # Proxy Pattern
-│   └── Program.cs
-├── 观察者模式/                 # Observer Pattern
-│   └── Program.cs
-├── 命令模式/                   # Command Pattern
-│   └── Program.cs
-├── 责任链模式/                 # Chain of Responsibility Pattern
-│   └── Program.cs
-├── 状态模式/                   # State Pattern
-│   └── Program.cs
-├── 模板方法模式/               # Template Method Pattern
-│   └── Program.cs
-├── 迭代器模式/                 # Iterator Pattern
-│   └── Program.cs
-└── 备忘录模式/                 # Memento Pattern
-    └── Program.cs
+├── DesignPattern.slnx              # VS2026 解决方案文件
+├── README.md                       # 项目说明文档
+│
+├── 创建型模式/
+│   ├── 单例模式/                   # Singleton Pattern
+│   ├── 原型模式/                   # Prototype Pattern
+│   ├── 工厂方法模式/               # Factory Method Pattern
+│   ├── 建造者模式/                 # Builder Pattern
+│   └── 抽象工厂模式/               # Abstract Factory Pattern
+│
+├── 结构型模式/
+│   ├── 适配器模式/                 # Adapter Pattern
+│   ├── 桥接模式/                   # Bridge Pattern
+│   ├── 组合模式/                   # Composite Pattern
+│   ├── 装饰模式/                   # Decorator Pattern
+│   ├── 外观模式/                   # Facade Pattern
+│   ├── 享元模式/                   # Flyweight Pattern
+│   └── 代理模式/                   # Proxy Pattern
+│
+└── 行为型模式/
+    ├── 中介者模式/                 # Mediator Pattern
+    ├── 命令模式/                   # Command Pattern
+    ├── 备忘录模式/                 # Memento Pattern
+    ├── 观察者模式/                 # Observer Pattern
+    ├── 状态模式/                   # State Pattern
+    ├── 策略模式/                   # Strategy Pattern
+    ├── 模板方法模式/               # Template Method Pattern
+    ├── 责任链模式/                 # Chain of Responsibility Pattern
+    ├── 迭代器模式/                 # Iterator Pattern
+    ├── 解释器模式/                 # Interpreter Pattern
+    └── 访问者模式/                 # Visitor Pattern
 ```
 
 ## 各模式详解
@@ -193,7 +188,7 @@ DesignPattern/
 - 图形缓存系统 - 原型注册表
 
 **核心要点**:
-- 实现 `ICloneable` 或自定义克隆接口
+- 实现自定义克隆接口
 - 区分浅拷贝和深拷贝
 - 减少对象创建开销
 
@@ -230,6 +225,22 @@ DesignPattern/
 
 ---
 
+#### 组合模式 (Composite)
+
+**定义**: 将对象组合成树形结构以表示"部分-整体"的层次结构。
+
+**示例场景**:
+- 文件系统 - 文件和文件夹的树形结构
+- 组织架构 - 公司部门层级
+- 图形绘制 - 组合图形
+
+**核心要点**:
+- 统一处理单个对象和组合对象
+- 叶子节点和组合节点实现相同接口
+- 递归处理树形结构
+
+---
+
 #### 装饰模式 (Decorator)
 
 **定义**: 动态地给对象添加额外职责。
@@ -257,6 +268,22 @@ DesignPattern/
 - 简化客户端调用
 - 降低系统耦合度
 - 符合迪米特法则
+
+---
+
+#### 享元模式 (Flyweight)
+
+**定义**: 运用共享技术有效地支持大量细粒度的对象。
+
+**示例场景**:
+- 棋盘游戏 - 棋子颜色共享
+- 文字编辑器 - 字符对象共享
+- 纹理缓存 - 游戏纹理共享
+
+**核心要点**:
+- 区分内部状态（可共享）和外部状态（不可共享）
+- 享元工厂管理对象池
+- 相同内部状态共享同一对象
 
 ---
 
@@ -410,6 +437,38 @@ DesignPattern/
 - 备忘录存储状态
 - 发起人创建/恢复状态
 - 管理者保存备忘录
+
+---
+
+#### 解释器模式 (Interpreter)
+
+**定义**: 给定一个语言，定义它的文法表示和解释器。
+
+**示例场景**:
+- 数学表达式解释器 - 加减乘除运算
+- 布尔表达式解释器 - 逻辑运算
+- 日期表达式解释器 - 日期计算
+
+**核心要点**:
+- 抽象表达式声明解释操作
+- 终结符表达式实现基本操作
+- 非终结符表达式组合表达式
+- 构建抽象语法树
+
+---
+
+#### 访问者模式 (Visitor)
+
+**定义**: 在不改变各元素类的前提下定义作用于这些元素的新操作。
+
+**示例场景**:
+- 形状导出 - XML/JSON 不同格式导出
+- 员工报表 - 薪资/年终奖不同维度统计
+
+**核心要点**:
+- 双分派机制：Accept + Visit
+- 在不修改元素类的情况下添加新操作
+- 对象结构稳定，操作经常变化时适用
 
 ---
 

@@ -398,7 +398,6 @@ class Program
         Console.WriteLine("--- 制作咖啡 ---");
         var coffeeMaker = new CoffeeMaker();
         coffeeMaker.PrepareBeverage();
-        #endregion
         
         Console.WriteLine("----------------------------------------\n");
         Console.WriteLine("场景3: 报告生成\n");
@@ -410,7 +409,6 @@ class Program
         Console.WriteLine("--- 库存报告 ---");
         var inventoryReport = new InventoryReportGenerator();
         inventoryReport.GenerateReport();
-        #endregion
         
         Console.WriteLine("模板方法模式优点:");
         Console.WriteLine("- 定义算法骨架,子类实现具体步骤");

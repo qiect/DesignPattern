@@ -120,7 +120,7 @@ public class RealDatabase : IDatabase
 /// </summary>
 public class DatabaseProxy : IDatabase
 {
-    private readonly RealDatabase? _realDatabase;
+    private RealDatabase? _realDatabase;
     private readonly Dictionary<string, string> _cache = new();
     private readonly string _userRole;
     
