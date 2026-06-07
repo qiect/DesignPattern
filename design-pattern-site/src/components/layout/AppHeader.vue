@@ -1,12 +1,14 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { Search, Sun, Moon, Monitor, Menu, X } from 'lucide-vue-next'
+import { useRouter } from 'vue-router'
 import { useTheme } from '@/composables/useTheme'
 
 const emit = defineEmits<{
   search: [query: string]
 }>()
 
+const router = useRouter()
 const searchQuery = ref('')
 const { theme, isAutoMode, toggleTheme, setAutoMode } = useTheme()
 
@@ -14,7 +16,10 @@ const showThemeMenu = ref(false)
 const showMobileNav = ref(false)
 
 function onSearch() {
-  emit('search', searchQuery.value)
+  const q = searchQuery.value.trim()
+  if (q) {
+    router.push({ name: 'search', query: { q } })
+  }
 }
 
 function handleSetAuto(auto: boolean) {

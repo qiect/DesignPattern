@@ -11,6 +11,11 @@ const routes = [
     component: HomePage,
   },
   {
+    path: '/search',
+    name: 'search',
+    component: CategoryPage,
+  },
+  {
     path: '/creational',
     name: 'creational',
     component: CategoryPage,
