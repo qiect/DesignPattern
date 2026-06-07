@@ -1,0 +1,101 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-bg: #0f1021;
+  --color-bg-card: #1a1b2e;
+  --color-bg-card-hover: #222340;
+  --color-border: #2a2b45;
+  --color-primary: #00d4aa;
+  --color-primary-dim: #00a88a;
+  --color-accent: #ff6b35;
+  --color-accent-dim: #cc5529;
+  --color-text: #e4e4f0;
+  --color-text-dim: #8888a8;
+  --color-creational: #00d4aa;
+  --color-structural: #6c8cff;
+  --color-behavioral: #ff6b35;
+
+  font-family: 'Noto Sans SC', 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+  line-height: 1.6;
+  font-weight: 400;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Outfit', 'Noto Sans SC', sans-serif;
+}
+
+code, pre {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* 自定义滚动条 */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-dim);
+}
+
+/* 网格背景 */
+.grid-bg {
+  background-image:
+    linear-gradient(rgba(42, 43, 69, 0.3) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(42, 43, 69, 0.3) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* 发光效果 */
+.glow-primary {
+  box-shadow: 0 0 20px rgba(0, 212, 170, 0.15);
+}
+.glow-accent {
+  box-shadow: 0 0 20px rgba(255, 107, 53, 0.15);
+}
+
+/* 动画箭头流动效果 */
+@keyframes flowArrow {
+  0% { stroke-dashoffset: 20; }
+  100% { stroke-dashoffset: 0; }
+}
+.flow-arrow {
+  stroke-dasharray: 10 10;
+  animation: flowArrow 1s linear infinite;
+}
+
+/* 渐入动画 */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-fade-in-up {
+  animation: fadeInUp 0.5s ease-out forwards;
+}
+
+/* 脉冲动画 */
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
