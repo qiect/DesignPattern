@@ -26,6 +26,36 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* 浅色主题 */
+[data-theme="light"] {
+  --color-bg: #f5f5fa;
+  --color-bg-card: #ffffff;
+  --color-bg-card-hover: #eeeef4;
+  --color-border: #d8d8e4;
+  --color-primary: #00a88a;
+  --color-primary-dim: #008f76;
+  --color-accent: #e05520;
+  --color-accent-dim: #c44a18;
+  --color-text: #1a1b2e;
+  --color-text-dim: #6b6b88;
+  --color-creational: #00a88a;
+  --color-structural: #4a6cf7;
+  --color-behavioral: #e05520;
+}
+
+/* 主题过渡 */
+*, *::before, *::after {
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.15s ease;
+}
+
+/* SVG 主题适配 */
+.svg-text-fill {
+  fill: var(--color-text);
+}
+.svg-dim-fill {
+  fill: var(--color-text-dim);
+}
+
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Outfit', 'Noto Sans SC', sans-serif;
 }
@@ -53,17 +83,26 @@ code, pre {
 /* 网格背景 */
 .grid-bg {
   background-image:
-    linear-gradient(rgba(42, 43, 69, 0.3) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(42, 43, 69, 0.3) 1px, transparent 1px);
+    linear-gradient(var(--grid-line-color, rgba(42, 43, 69, 0.3)) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line-color, rgba(42, 43, 69, 0.3)) 1px, transparent 1px);
   background-size: 40px 40px;
+}
+[data-theme="light"] .grid-bg {
+  --grid-line-color: rgba(100, 100, 140, 0.12);
 }
 
 /* 发光效果 */
 .glow-primary {
-  box-shadow: 0 0 20px rgba(0, 212, 170, 0.15);
+  box-shadow: 0 0 20px var(--glow-primary-color, rgba(0, 212, 170, 0.15));
 }
 .glow-accent {
-  box-shadow: 0 0 20px rgba(255, 107, 53, 0.15);
+  box-shadow: 0 0 20px var(--glow-accent-color, rgba(255, 107, 53, 0.15));
+}
+[data-theme="light"] .glow-primary {
+  --glow-primary-color: rgba(0, 168, 138, 0.1);
+}
+[data-theme="light"] .glow-accent {
+  --glow-accent-color: rgba(224, 85, 32, 0.1);
 }
 
 /* 动画箭头流动效果 */

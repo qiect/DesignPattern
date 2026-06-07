@@ -2,6 +2,7 @@
 import { ref, onMounted, watch, shallowRef } from 'vue'
 import { createHighlighter, type Highlighter } from 'shiki'
 import { Copy, Check } from 'lucide-vue-next'
+import { useTheme } from '@/composables/useTheme'
 
 const props = defineProps<{
   code: string
@@ -9,13 +10,15 @@ const props = defineProps<{
   highlights?: number[]
 }>()
 
+const { theme } = useTheme()
+
 const highlightedHtml = ref('')
 const highlighter = shallowRef<Highlighter | null>(null)
 const copied = ref(false)
 
 async function initHighlighter() {
   highlighter.value = await createHighlighter({
-    themes: ['vitesse-dark'],
+    themes: ['vitesse-dark', 'vitesse-light'],
     langs: ['csharp', 'typescript'],
   })
 }
@@ -23,9 +26,11 @@ async function initHighlighter() {
 function highlight() {
   if (!highlighter.value) return
 
+  const shikiTheme = theme.value === 'light' ? 'vitesse-light' : 'vitesse-dark'
+
   const html = highlighter.value.codeToHtml(props.code, {
     lang: props.language,
-    theme: 'vitesse-dark',
+    theme: shikiTheme,
   })
 
   if (props.highlights?.length) {
@@ -54,7 +59,7 @@ onMounted(async () => {
   highlight()
 })
 
-watch(() => [props.code, props.language, props.highlights], highlight)
+watch(() => [props.code, props.language, props.highlights, theme.value], highlight)
 </script>
 
 <template>

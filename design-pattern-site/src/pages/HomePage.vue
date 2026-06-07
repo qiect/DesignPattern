@@ -184,16 +184,16 @@ function navigateToCategory(catId: string) {
       <div class="mt-8 bg-bg-card border border-border rounded-xl p-6 overflow-x-auto">
         <svg viewBox="0 0 800 620" class="w-full min-w-[600px]" xmlns="http://www.w3.org/2000/svg">
           <!-- Category labels -->
-          <text x="120" y="24" text-anchor="middle" fill="#00d4aa" font-size="13" font-weight="600">创建型</text>
-          <text x="400" y="24" text-anchor="middle" fill="#6c8cff" font-size="13" font-weight="600">结构型</text>
-          <text x="680" y="24" text-anchor="middle" fill="#ff6b35" font-size="13" font-weight="600">行为型</text>
+          <text x="120" y="24" text-anchor="middle" :fill="categoryColorMap.creational" font-size="13" font-weight="600">创建型</text>
+          <text x="400" y="24" text-anchor="middle" :fill="categoryColorMap.structural" font-size="13" font-weight="600">结构型</text>
+          <text x="680" y="24" text-anchor="middle" :fill="categoryColorMap.behavioral" font-size="13" font-weight="600">行为型</text>
 
           <!-- Edges -->
           <template v-for="(edge, i) in networkEdges" :key="i">
             <line
               :x1="edge.from.x" :y1="edge.from.y"
               :x2="edge.to.x" :y2="edge.to.y"
-              :stroke="edge.type === 'complementary' ? '#00d4aa' : edge.type === 'alternative' ? '#ff6b35' : '#6c8cff'"
+              :stroke="edge.type === 'complementary' ? categoryColorMap.creational : edge.type === 'alternative' ? categoryColorMap.behavioral : categoryColorMap.structural"
               :stroke-dasharray="edge.type === 'alternative' ? '4 4' : 'none'"
               stroke-width="1"
               opacity="0.3"
@@ -203,16 +203,16 @@ function navigateToCategory(catId: string) {
           <!-- Nodes -->
           <template v-for="node in networkNodes" :key="node.id">
             <circle :cx="node.x" :cy="node.y" r="4" :fill="node.color" opacity="0.8" />
-            <text :x="node.x + 10" :y="node.y + 4" fill="#e4e4f0" font-size="11">{{ node.label }}</text>
+            <text :x="node.x + 10" :y="node.y + 4" class="svg-text-fill" font-size="11">{{ node.label }}</text>
           </template>
 
           <!-- Legend -->
-          <line x1="20" y1="600" x2="50" y2="600" stroke="#00d4aa" stroke-width="1.5" />
-          <text x="55" y="604" fill="#8888a8" font-size="10">互补</text>
-          <line x1="120" y1="600" x2="150" y2="600" stroke="#ff6b35" stroke-width="1.5" stroke-dasharray="4 4" />
-          <text x="155" y="604" fill="#8888a8" font-size="10">替代</text>
-          <line x1="220" y1="600" x2="250" y2="600" stroke="#6c8cff" stroke-width="1.5" />
-          <text x="255" y="604" fill="#8888a8" font-size="10">组合</text>
+          <line x1="20" y1="600" x2="50" y2="600" :stroke="categoryColorMap.creational" stroke-width="1.5" />
+          <text x="55" y="604" class="svg-dim-fill" font-size="10">互补</text>
+          <line x1="120" y1="600" x2="150" y2="600" :stroke="categoryColorMap.behavioral" stroke-width="1.5" stroke-dasharray="4 4" />
+          <text x="155" y="604" class="svg-dim-fill" font-size="10">替代</text>
+          <line x1="220" y1="600" x2="250" y2="600" :stroke="categoryColorMap.structural" stroke-width="1.5" />
+          <text x="255" y="604" class="svg-dim-fill" font-size="10">组合</text>
         </svg>
       </div>
     </section>

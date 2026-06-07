@@ -8,8 +8,24 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Noto+Sans+SC:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <script>
+      // 初始化主题，避免闪烁
+      (function() {
+        var stored = localStorage.getItem('theme-preference');
+        var isAuto = localStorage.getItem('theme-preference-auto') !== 'false';
+        var theme;
+        if (stored && !isAuto) {
+          theme = stored;
+        } else {
+          var hour = new Date().getHours();
+          theme = (hour >= 6 && hour < 18) ? 'light' : 'dark';
+        }
+        document.documentElement.setAttribute('data-theme', theme);
+        document.documentElement.classList.toggle('dark', theme === 'dark');
+      })();
+    </script>
   </head>
-  <body class="bg-[#0f1021] text-gray-100">
+  <body>
     <div id="app"></div>
     <script type="module" src="/src/main.ts"></script>
   </body>

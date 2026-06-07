@@ -1,15 +1,26 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import type { AnimationStep } from '@/types/pattern'
+import { useTheme } from '@/composables/useTheme'
 
 const props = defineProps<{
   steps: AnimationStep[]
   currentStep: number
 }>()
 
+const { theme } = useTheme()
+
 const currentStepData = computed(() => props.steps[props.currentStep] ?? { description: '', objects: [], arrows: [] })
 const currentObjects = computed(() => currentStepData.value.objects)
 const currentArrows = computed(() => currentStepData.value.arrows)
+
+// 主题相关的 SVG 颜色
+const svgColors = computed(() => ({
+  text: theme.value === 'light' ? '#1a1b2e' : '#e4e4f0',
+  dim: theme.value === 'light' ? '#6b6b88' : '#8888a8',
+  structural: theme.value === 'light' ? '#4a6cf7' : '#6c8cff',
+  accent: theme.value === 'light' ? '#e05520' : '#ff6b35',
+}))
 
 function getObjectById(id: string) {
   return currentObjects.value.find((o) => o.id === id)
@@ -46,7 +57,7 @@ function getArrowCoords(arrow: { from: string; to: string }) {
           refY="3.5"
           orient="auto"
         >
-          <polygon points="0 0, 10 3.5, 0 7" fill="#6c8cff" />
+          <polygon points="0 0, 10 3.5, 0 7" :fill="svgColors.structural" />
         </marker>
         <marker
           id="arrowhead-accent"
@@ -56,7 +67,7 @@ function getArrowCoords(arrow: { from: string; to: string }) {
           refY="3.5"
           orient="auto"
         >
-          <polygon points="0 0, 10 3.5, 0 7" fill="#ff6b35" />
+          <polygon points="0 0, 10 3.5, 0 7" :fill="svgColors.accent" />
         </marker>
       </defs>
 
@@ -65,10 +76,10 @@ function getArrowCoords(arrow: { from: string; to: string }) {
         v-for="arrow in currentArrows"
         :key="`${arrow.from}-${arrow.to}`"
         v-bind="getArrowCoords(arrow)"
-        :stroke="arrow.color ?? '#6c8cff'"
+        :stroke="arrow.color ?? svgColors.structural"
         :stroke-width="2"
         :stroke-dasharray="arrow.dashed ? '6 4' : undefined"
-        :marker-end="arrow.color === '#ff6b35' ? 'url(#arrowhead-accent)' : 'url(#arrowhead)'"
+        :marker-end="arrow.color === '#ff6b35' || arrow.color === svgColors.accent ? 'url(#arrowhead-accent)' : 'url(#arrowhead)'"
         :class="{ 'flow-arrow': arrow.animated }"
       />
 
@@ -81,7 +92,8 @@ function getArrowCoords(arrow: { from: string; to: string }) {
           return { x: (c.x1 + c.x2) / 2, y: (c.y1 + c.y2) / 2 - 6 }
         })()"
         text-anchor="middle"
-        fill="#8888a8"
+        fill="currentColor"
+        class="svg-dim-fill"
         font-size="11"
         font-family="Outfit, sans-serif"
       >{{ arrow.label }}</text>
@@ -130,7 +142,7 @@ function getArrowCoords(arrow: { from: string; to: string }) {
           dominant-baseline="central"
           :x="(obj.type === 'rect' ? (obj.width ?? 120) / 2 : 0)"
           :y="(obj.type === 'rect' ? (obj.height ?? 50) / 2 : 0)"
-          fill="#e4e4f0"
+          :fill="svgColors.text"
           font-size="13"
           font-family="Outfit, sans-serif"
         >{{ obj.label }}</text>

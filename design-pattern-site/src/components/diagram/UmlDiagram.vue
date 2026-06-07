@@ -1,20 +1,38 @@
 <script setup lang="ts">
 import mermaid from 'mermaid'
 import { ref, onMounted, watch } from 'vue'
+import { useTheme } from '@/composables/useTheme'
 
-mermaid.initialize({
-  startOnLoad: false,
-  theme: 'dark',
-  themeVariables: {
-    primaryColor: '#1a1b2e',
-    primaryTextColor: '#e4e4f0',
-    primaryBorderColor: '#00d4aa',
-    lineColor: '#6c8cff',
-    secondaryColor: '#222340',
-    tertiaryColor: '#0f1021',
-    fontFamily: 'Outfit, Noto Sans SC, sans-serif',
-  },
-})
+const { theme } = useTheme()
+
+const darkThemeVars = {
+  primaryColor: '#1a1b2e',
+  primaryTextColor: '#e4e4f0',
+  primaryBorderColor: '#00d4aa',
+  lineColor: '#6c8cff',
+  secondaryColor: '#222340',
+  tertiaryColor: '#0f1021',
+  fontFamily: 'Outfit, Noto Sans SC, sans-serif',
+}
+
+const lightThemeVars = {
+  primaryColor: '#ffffff',
+  primaryTextColor: '#1a1b2e',
+  primaryBorderColor: '#00a88a',
+  lineColor: '#4a6cf7',
+  secondaryColor: '#eeeef4',
+  tertiaryColor: '#f5f5fa',
+  fontFamily: 'Outfit, Noto Sans SC, sans-serif',
+}
+
+function initMermaid() {
+  const isLight = theme.value === 'light'
+  mermaid.initialize({
+    startOnLoad: false,
+    theme: isLight ? 'default' : 'dark',
+    themeVariables: isLight ? lightThemeVars : darkThemeVars,
+  })
+}
 
 const props = defineProps<{
   code: string
@@ -26,6 +44,7 @@ let renderId = 0
 async function renderDiagram() {
   if (!containerRef.value || !props.code) return
 
+  initMermaid()
   renderId++
   const id = `uml-${renderId}`
 
@@ -41,6 +60,7 @@ async function renderDiagram() {
 onMounted(renderDiagram)
 
 watch(() => props.code, renderDiagram)
+watch(theme, renderDiagram)
 </script>
 
 <template>
