@@ -79,12 +79,12 @@ const compareRows = computed<CompareRow[]>(() => {
 
 <template>
   <AppLayout>
-    <div class="max-w-5xl mx-auto px-6 py-8 space-y-8">
+    <div class="max-w-5xl mx-auto px-4 md:px-6 py-6 md:py-8 space-y-6 md:space-y-8">
     <SectionTitle title="模式对比" subtitle="Pattern Comparison" icon="GitCompare" />
 
     <!-- Selectors -->
     <div class="flex items-center gap-4 flex-wrap">
-      <div class="flex-1 min-w-[200px]">
+      <div class="flex-1 min-w-[140px] sm:min-w-[200px]">
         <label class="block text-sm text-dim mb-1">模式 A</label>
         <select
           v-model="selectedA"
@@ -97,7 +97,7 @@ const compareRows = computed<CompareRow[]>(() => {
 
       <span class="text-dim text-lg mt-5">VS</span>
 
-      <div class="flex-1 min-w-[200px]">
+      <div class="flex-1 min-w-[140px] sm:min-w-[200px]">
         <label class="block text-sm text-dim mb-1">模式 B</label>
         <select
           v-model="selectedB"
@@ -110,7 +110,7 @@ const compareRows = computed<CompareRow[]>(() => {
     </div>
 
     <!-- Pattern headers -->
-    <div v-if="patternA || patternB" class="grid grid-cols-2 gap-6">
+    <div v-if="patternA || patternB" class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
       <div v-if="patternA" class="rounded-lg border border-border bg-bg-card p-4">
         <div class="flex items-baseline gap-2 mb-1">
           <span class="font-display text-xl font-bold" :style="{ color: getCategoryColor(patternA.category) }">
@@ -145,8 +145,8 @@ const compareRows = computed<CompareRow[]>(() => {
     </div>
 
     <!-- Comparison table -->
-    <div v-if="compareRows.length" class="rounded-lg border border-border overflow-hidden">
-      <table class="w-full text-sm">
+    <div v-if="compareRows.length" class="rounded-lg border border-border overflow-x-auto">
+      <table class="w-full text-sm min-w-[400px]">
         <thead>
           <tr class="bg-bg-card border-b border-border">
             <th class="text-left px-4 py-3 text-dim font-medium w-24">维度</th>
@@ -174,7 +174,7 @@ const compareRows = computed<CompareRow[]>(() => {
     </div>
 
     <!-- Pros & Cons side by side -->
-    <div v-if="patternA || patternB" class="grid grid-cols-2 gap-6">
+    <div v-if="patternA || patternB" class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
       <div v-if="patternA">
         <div class="space-y-4">
           <div class="rounded-lg border border-primary/30 bg-primary/5 p-4">

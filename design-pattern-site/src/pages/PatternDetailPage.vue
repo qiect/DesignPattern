@@ -51,9 +51,9 @@ function goToPattern(id: string) {
 <template>
   <AppLayout>
     <div class="flex h-[calc(100vh-4rem)]">
-    <AppSidebar :active-pattern-id="patternId" />
+    <AppSidebar :active-pattern-id="patternId" class="hidden lg:block" />
 
-    <div v-if="pattern" class="flex-1 overflow-y-auto px-8 py-6 space-y-10">
+    <div v-if="pattern" class="flex-1 overflow-y-auto px-4 md:px-8 py-6 space-y-10">
       <!-- 1. 模式定义 -->
       <section>
         <SectionTitle title="模式定义" icon="BookOpen" />
@@ -98,7 +98,7 @@ function goToPattern(id: string) {
       <!-- 2. 核心角色 -->
       <section>
         <SectionTitle title="核心角色" subtitle="Core Roles" icon="Users" />
-        <div class="grid grid-cols-2 lg:grid-cols-3 gap-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           <div
             v-for="role in pattern.roles"
             :key="role.nameEn"
@@ -124,7 +124,7 @@ function goToPattern(id: string) {
       <section>
         <SectionTitle title="交互式动画演示" subtitle="Interactive Animation" icon="PlayCircle" />
         <PatternAnimator :steps="pattern.animationSteps" :current-step="currentStep" />
-        <div class="mt-4 flex items-center justify-between">
+        <div class="mt-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
           <StepPlayer
             :total-steps="pattern.animationSteps.length"
             v-model:current-step="currentStep"
@@ -225,23 +225,25 @@ function goToPattern(id: string) {
       </section>
 
       <!-- Navigation -->
-      <div class="flex items-center justify-between pt-6 pb-8 border-t border-border">
+      <div class="flex items-center justify-between gap-4 pt-6 pb-8 border-t border-border">
         <button
           v-if="prevPattern"
-          class="flex items-center gap-2 px-4 py-2 rounded-lg border border-border bg-bg-card text-dim hover:text-[var(--color-text)] hover:border-primary/50 transition-colors"
+          class="flex items-center gap-2 px-3 md:px-4 py-2 rounded-lg border border-border bg-bg-card text-dim hover:text-[var(--color-text)] hover:border-primary/50 transition-colors text-sm"
           @click="goToPattern(prevPattern.id)"
         >
           <ChevronLeft :size="16" />
-          {{ prevPattern.name }}
+          <span class="hidden sm:inline">{{ prevPattern.name }}</span>
+          <span class="sm:hidden">上一个</span>
         </button>
         <div v-else />
 
         <button
           v-if="nextPattern"
-          class="flex items-center gap-2 px-4 py-2 rounded-lg border border-border bg-bg-card text-dim hover:text-[var(--color-text)] hover:border-primary/50 transition-colors"
+          class="flex items-center gap-2 px-3 md:px-4 py-2 rounded-lg border border-border bg-bg-card text-dim hover:text-[var(--color-text)] hover:border-primary/50 transition-colors text-sm"
           @click="goToPattern(nextPattern.id)"
         >
-          {{ nextPattern.name }}
+          <span class="hidden sm:inline">{{ nextPattern.name }}</span>
+          <span class="sm:hidden">下一个</span>
           <ChevronRight :size="16" />
         </button>
       </div>

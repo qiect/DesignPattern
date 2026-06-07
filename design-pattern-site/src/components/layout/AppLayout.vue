@@ -9,7 +9,7 @@ const emit = defineEmits<{
 <template>
   <div class="min-h-screen bg-bg text-[var(--color-text)]">
     <AppHeader @search="emit('search', $event)" />
-    <main class="pt-16">
+    <main class="pt-14 md:pt-16">
       <slot />
     </main>
   </div>

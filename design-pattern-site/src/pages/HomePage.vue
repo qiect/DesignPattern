@@ -76,7 +76,7 @@ function navigateToCategory(catId: string) {
 <template>
   <AppLayout>
     <!-- Hero Section -->
-    <section class="relative grid-bg overflow-hidden py-24 px-6">
+    <section class="relative grid-bg overflow-hidden py-16 md:py-24 px-4 md:px-6">
       <!-- Floating shapes -->
       <div class="absolute inset-0 overflow-hidden pointer-events-none">
         <div class="absolute top-[10%] left-[8%] w-16 h-16 border border-primary/20 rounded-lg rotate-12 animate-float-slow" />
@@ -87,10 +87,10 @@ function navigateToCategory(catId: string) {
       </div>
 
       <div class="relative max-w-4xl mx-auto text-center">
-        <h1 class="font-display text-5xl md:text-6xl font-bold mb-4 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+        <h1 class="font-display text-3xl sm:text-5xl md:text-6xl font-bold mb-4 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
           GoF 23 种设计模式
         </h1>
-        <p class="text-xl text-dim mb-6">交互式学习平台 · 看懂设计模式</p>
+        <p class="text-lg sm:text-xl text-dim mb-6">交互式学习平台 · 看懂设计模式</p>
         <p class="text-[var(--color-text-dim)] max-w-2xl mx-auto leading-relaxed">
           通过动画演示、代码对比和实际场景，深入理解面向对象设计模式。
           从创建型到行为型，掌握软件设计的核心思想。
@@ -106,7 +106,7 @@ function navigateToCategory(catId: string) {
     </section>
 
     <!-- Category Cards -->
-    <section class="max-w-6xl mx-auto px-6 py-16">
+    <section class="max-w-6xl mx-auto px-4 md:px-6 py-10 md:py-16">
       <SectionTitle title="三大类模式" subtitle="按目的分类的 GoF 设计模式" icon="Layers" />
       <div class="grid md:grid-cols-3 gap-6 mt-8">
         <div
@@ -139,7 +139,7 @@ function navigateToCategory(catId: string) {
     </section>
 
     <!-- Learning Path -->
-    <section class="max-w-6xl mx-auto px-6 py-16">
+    <section class="max-w-6xl mx-auto px-4 md:px-6 py-10 md:py-16">
       <SectionTitle title="推荐学习路径" subtitle="由浅入深，循序渐进" icon="Route" />
       <div class="mt-8 overflow-x-auto pb-4 scrollbar-thin">
         <div class="flex items-center gap-3 min-w-max">
@@ -161,9 +161,9 @@ function navigateToCategory(catId: string) {
     </section>
 
     <!-- Design Principles -->
-    <section class="max-w-6xl mx-auto px-6 py-16">
+    <section class="max-w-6xl mx-auto px-4 md:px-6 py-10 md:py-16">
       <SectionTitle title="七大设计原则" subtitle="设计模式的理论基础" icon="BookOpen" />
-      <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4 mt-8">
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-3 md:gap-4 mt-8">
         <div
           v-for="p in principles"
           :key="p.abbr"
@@ -179,7 +179,7 @@ function navigateToCategory(catId: string) {
     </section>
 
     <!-- Pattern Network -->
-    <section class="max-w-6xl mx-auto px-6 py-16">
+    <section class="max-w-6xl mx-auto px-4 md:px-6 py-10 md:py-16">
       <SectionTitle title="模式关系网络" subtitle="模式之间的互补、替代与组合关系" icon="Network" />
       <div class="mt-8 bg-bg-card border border-border rounded-xl p-6 overflow-x-auto">
         <svg viewBox="0 0 800 620" class="w-full min-w-[600px]" xmlns="http://www.w3.org/2000/svg">

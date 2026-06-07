@@ -58,7 +58,7 @@ const pageDesc = computed(() =>
 
 <template>
   <AppLayout>
-    <div class="max-w-6xl mx-auto px-6 py-12">
+    <div class="max-w-6xl mx-auto px-4 md:px-6 py-8 md:py-12">
       <!-- Header -->
       <div class="mb-8">
         <div class="flex items-center gap-3 mb-3">
