@@ -48,6 +48,11 @@
   transition: background-color 0.3s ease, border-color 0.3s ease, color 0.15s ease;
 }
 
+/* 排除 shiki 代码高亮内的过渡，避免闪烁 */
+.shiki *, .shiki *::before, .shiki *::after {
+  transition: none !important;
+}
+
 /* SVG 主题适配 */
 .svg-text-fill {
   fill: var(--color-text);

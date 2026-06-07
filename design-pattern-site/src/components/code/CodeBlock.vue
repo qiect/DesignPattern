@@ -63,19 +63,17 @@ watch(() => [props.code, props.language, props.highlights, theme.value], highlig
 </script>
 
 <template>
-  <div class="relative rounded-lg border border-border bg-bg-card overflow-hidden">
-    <div class="flex items-center justify-between px-4 py-2 border-b border-border bg-bg">
-      <span class="text-xs text-dim font-mono uppercase tracking-wider">{{ language === 'csharp' ? 'C#' : 'TypeScript' }}</span>
-      <button
-        class="p-1.5 rounded text-dim hover:text-[var(--color-text)] hover:bg-bg-card transition-colors"
-        title="Copy code"
-        @click="copyCode"
-      >
-        <Check v-if="copied" :size="14" class="text-primary" />
-        <Copy v-else :size="14" />
-      </button>
-    </div>
-    <div class="overflow-x-auto p-4">
+  <div class="code-block-wrapper relative">
+    <!-- 复制按钮 -->
+    <button
+      class="absolute top-3 right-3 z-10 p-1.5 rounded-md text-dim hover:text-[var(--color-text)] hover:bg-bg-hover transition-colors"
+      title="复制代码"
+      @click="copyCode"
+    >
+      <Check v-if="copied" :size="14" class="text-primary" />
+      <Copy v-else :size="14" />
+    </button>
+    <div class="overflow-x-auto px-5 py-4">
       <div
         class="shiki-container"
         v-html="highlightedHtml"
@@ -85,23 +83,35 @@ watch(() => [props.code, props.language, props.highlights, theme.value], highlig
 </template>
 
 <style scoped>
+.code-block-wrapper {
+  background: var(--color-bg);
+  border-radius: 0 0 0.5rem 0.5rem;
+}
+
 :deep(.shiki) {
   background: transparent !important;
   font-size: 13px;
   line-height: 1.7;
   tab-size: 2;
+  padding: 0;
+  margin: 0;
+  counter-reset: line-number;
 }
 
 :deep(.line) {
   display: block;
   min-height: 1.7em;
-  padding: 0 1rem;
+  padding: 0 0.5rem;
   border-left: 3px solid transparent;
   transition: background-color 0.2s;
 }
 
 :deep(.highlighted-line) {
-  background-color: rgba(0, 212, 170, 0.08);
+  background-color: var(--highlight-line-bg, rgba(0, 212, 170, 0.08));
   border-left-color: var(--color-primary);
+}
+
+[data-theme="light"] .code-block-wrapper :deep(.highlighted-line) {
+  --highlight-line-bg: rgba(0, 168, 138, 0.08);
 }
 </style>

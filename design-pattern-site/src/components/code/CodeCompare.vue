@@ -20,12 +20,13 @@ const tabs = computed(() =>
 </script>
 
 <template>
-  <div class="rounded-lg border border-border bg-bg-card overflow-hidden">
-    <div class="flex border-b border-border bg-bg">
+  <div class="rounded-lg border border-border overflow-hidden">
+    <!-- Tab 栏 -->
+    <div class="flex items-center border-b border-border bg-bg-card">
       <button
         v-for="tab in tabs"
         :key="tab.index"
-        class="px-4 py-2.5 text-sm font-medium transition-colors relative"
+        class="relative px-5 py-2.5 text-sm font-medium transition-colors"
         :class="[
           activeIndex === tab.index
             ? 'text-primary'
@@ -36,11 +37,12 @@ const tabs = computed(() =>
         {{ tab.label }}
         <span
           v-if="activeIndex === tab.index"
-          class="absolute bottom-0 left-0 right-0 h-0.5 bg-primary"
+          class="absolute bottom-0 left-2 right-2 h-[2px] bg-primary rounded-full"
         />
       </button>
     </div>
 
+    <!-- 代码区域 -->
     <CodeBlock
       v-if="activeExample"
       :code="activeExample.code"
