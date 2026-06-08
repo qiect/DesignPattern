@@ -64,15 +64,21 @@ watch(() => [props.code, props.language, props.highlights, theme.value], highlig
 
 <template>
   <div class="code-block-wrapper relative">
-    <!-- 复制按钮 -->
-    <button
-      class="absolute top-3 right-3 z-10 p-1.5 rounded-md text-dim hover:text-[var(--color-text)] hover:bg-bg-hover transition-colors"
-      title="复制代码"
-      @click="copyCode"
-    >
-      <Check v-if="copied" :size="14" class="text-primary" />
-      <Copy v-else :size="14" />
-    </button>
+    <!-- 图例 + 复制按钮 -->
+    <div class="absolute top-2.5 right-3 z-10 flex items-center gap-3">
+      <span v-if="highlights?.length" class="flex items-center gap-1.5 text-xs text-dim">
+        <span class="inline-block w-3 h-3 rounded-sm border-l-2 border-primary bg-primary/10" />
+        关键代码
+      </span>
+      <button
+        class="p-1.5 rounded-md text-dim hover:text-[var(--color-text)] hover:bg-bg-hover transition-colors"
+        title="复制代码"
+        @click="copyCode"
+      >
+        <Check v-if="copied" :size="14" class="text-primary" />
+        <Copy v-else :size="14" />
+      </button>
+    </div>
     <div class="overflow-x-auto px-5 py-4">
       <div
         class="shiki-container"

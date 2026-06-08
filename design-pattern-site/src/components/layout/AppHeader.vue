@@ -112,9 +112,6 @@ function closeMobileNav() {
                 <span>跟随时间</span>
                 <span v-if="isAutoMode" class="ml-auto text-xs">✓</span>
               </button>
-              <div class="px-4 py-2 text-xs text-dim border-t border-border">
-                6:00-18:00 浅色 · 18:00-6:00 深色
-              </div>
             </div>
           </Transition>
         </div>
