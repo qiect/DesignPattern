@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, ref, watch, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { Search, Hammer, Layers, GitBranch } from 'lucide-vue-next'
 import type { PatternCategory } from '@/types/pattern'
@@ -16,6 +16,21 @@ const props = defineProps<{
 const route = useRoute()
 const searchQuery = ref('')
 
+// 从 URL 参数初始化搜索
+onMounted(() => {
+  const q = route.query.q as string | undefined
+  if (q) {
+    searchQuery.value = q
+  }
+})
+
+// 监听路由变化更新搜索
+watch(() => route.query.q, (newQ) => {
+  if (typeof newQ === 'string' && newQ !== searchQuery.value) {
+    searchQuery.value = newQ
+  }
+})
+
 const categoryParam = computed(() => props.category ?? (route.params.category as string | undefined))
 const isAllPatterns = computed(() => !categoryParam.value)
 
@@ -30,7 +45,7 @@ const categoryIcons: Record<string, typeof Hammer> = {
 }
 
 const displayedPatterns = computed(() => {
-  let patterns = isAllPatterns.value
+  let patterns = (isAllPatterns.value || isSearchPage.value)
     ? getAllPatterns()
     : getPatternsByCategory(categoryParam.value as PatternCategory)
 
@@ -47,18 +62,22 @@ const displayedPatterns = computed(() => {
   return patterns
 })
 
-const pageTitle = computed(() =>
-  currentCategory.value?.name ?? '全部设计模式'
-)
+const isSearchPage = computed(() => route.name === 'search')
 
-const pageDesc = computed(() =>
-  currentCategory.value?.description ?? 'GoF 23 种经典设计模式完整列表'
-)
+const pageTitle = computed(() => {
+  if (isSearchPage.value && searchQuery.value.trim()) return `搜索: ${searchQuery.value}`
+  return currentCategory.value?.name ?? '全部设计模式'
+})
+
+const pageDesc = computed(() => {
+  if (isSearchPage.value && searchQuery.value.trim()) return `找到 ${displayedPatterns.value.length} 个匹配的设计模式`
+  return currentCategory.value?.description ?? 'GoF 23 种经典设计模式完整列表'
+})
 </script>
 
 <template>
   <AppLayout>
-    <div class="max-w-6xl mx-auto px-6 py-12">
+    <div class="max-w-6xl mx-auto px-4 md:px-6 py-8 md:py-12">
       <!-- Header -->
       <div class="mb-8">
         <div class="flex items-center gap-3 mb-3">
@@ -89,8 +108,8 @@ const pageDesc = computed(() =>
         />
       </div>
 
-      <!-- Category Tabs (shown on all-patterns page) -->
-      <div v-if="isAllPatterns" class="flex gap-3 mb-8 flex-wrap">
+      <!-- Category Tabs (shown on all-patterns or search page) -->
+      <div v-if="isAllPatterns || isSearchPage" class="flex gap-3 mb-8 flex-wrap">
         <router-link
           v-for="cat in categories"
           :key="cat.id"

@@ -10,23 +10,23 @@ export default {
     extend: {
       colors: {
         bg: {
-          DEFAULT: '#0f1021',
-          card: '#1a1b2e',
-          hover: '#222340',
+          DEFAULT: 'var(--color-bg)',
+          card: 'var(--color-bg-card)',
+          hover: 'var(--color-bg-card-hover)',
         },
-        border: '#2a2b45',
+        border: 'var(--color-border)',
         primary: {
-          DEFAULT: '#00d4aa',
-          dim: '#00a88a',
+          DEFAULT: 'var(--color-primary)',
+          dim: 'var(--color-primary-dim)',
         },
         accent: {
-          DEFAULT: '#ff6b35',
-          dim: '#cc5529',
+          DEFAULT: 'var(--color-accent)',
+          dim: 'var(--color-accent-dim)',
         },
-        creational: '#00d4aa',
-        structural: '#6c8cff',
-        behavioral: '#ff6b35',
-        dim: '#8888a8',
+        creational: 'var(--color-creational)',
+        structural: 'var(--color-structural)',
+        behavioral: 'var(--color-behavioral)',
+        dim: 'var(--color-text-dim)',
       },
       fontFamily: {
         display: ['Outfit', 'Noto Sans SC', 'sans-serif'],

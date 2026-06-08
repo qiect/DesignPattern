@@ -2,6 +2,7 @@
 import { ref, onMounted, watch, shallowRef } from 'vue'
 import { createHighlighter, type Highlighter } from 'shiki'
 import { Copy, Check } from 'lucide-vue-next'
+import { useTheme } from '@/composables/useTheme'
 
 const props = defineProps<{
   code: string
@@ -9,13 +10,15 @@ const props = defineProps<{
   highlights?: number[]
 }>()
 
+const { theme } = useTheme()
+
 const highlightedHtml = ref('')
 const highlighter = shallowRef<Highlighter | null>(null)
 const copied = ref(false)
 
 async function initHighlighter() {
   highlighter.value = await createHighlighter({
-    themes: ['vitesse-dark'],
+    themes: ['vitesse-dark', 'vitesse-light'],
     langs: ['csharp', 'typescript'],
   })
 }
@@ -23,9 +26,11 @@ async function initHighlighter() {
 function highlight() {
   if (!highlighter.value) return
 
+  const shikiTheme = theme.value === 'light' ? 'vitesse-light' : 'vitesse-dark'
+
   const html = highlighter.value.codeToHtml(props.code, {
     lang: props.language,
-    theme: 'vitesse-dark',
+    theme: shikiTheme,
   })
 
   if (props.highlights?.length) {
@@ -54,23 +59,27 @@ onMounted(async () => {
   highlight()
 })
 
-watch(() => [props.code, props.language, props.highlights], highlight)
+watch(() => [props.code, props.language, props.highlights, theme.value], highlight)
 </script>
 
 <template>
-  <div class="relative rounded-lg border border-border bg-bg-card overflow-hidden">
-    <div class="flex items-center justify-between px-4 py-2 border-b border-border bg-bg">
-      <span class="text-xs text-dim font-mono uppercase tracking-wider">{{ language === 'csharp' ? 'C#' : 'TypeScript' }}</span>
+  <div class="code-block-wrapper relative">
+    <!-- 图例 + 复制按钮 -->
+    <div class="absolute top-2.5 right-3 z-10 flex items-center gap-3">
+      <span v-if="highlights?.length" class="flex items-center gap-1.5 text-xs text-dim">
+        <span class="inline-block w-3 h-3 rounded-sm border-l-2 border-primary bg-primary/10" />
+        关键代码
+      </span>
       <button
-        class="p-1.5 rounded text-dim hover:text-[var(--color-text)] hover:bg-bg-card transition-colors"
-        title="Copy code"
+        class="p-1.5 rounded-md text-dim hover:text-[var(--color-text)] hover:bg-bg-hover transition-colors"
+        title="复制代码"
         @click="copyCode"
       >
         <Check v-if="copied" :size="14" class="text-primary" />
         <Copy v-else :size="14" />
       </button>
     </div>
-    <div class="overflow-x-auto p-4">
+    <div class="overflow-x-auto px-5 py-4">
       <div
         class="shiki-container"
         v-html="highlightedHtml"
@@ -80,23 +89,35 @@ watch(() => [props.code, props.language, props.highlights], highlight)
 </template>
 
 <style scoped>
+.code-block-wrapper {
+  background: var(--color-bg);
+  border-radius: 0 0 0.5rem 0.5rem;
+}
+
 :deep(.shiki) {
   background: transparent !important;
   font-size: 13px;
   line-height: 1.7;
   tab-size: 2;
+  padding: 0;
+  margin: 0;
+  counter-reset: line-number;
 }
 
 :deep(.line) {
   display: block;
   min-height: 1.7em;
-  padding: 0 1rem;
+  padding: 0 0.5rem;
   border-left: 3px solid transparent;
   transition: background-color 0.2s;
 }
 
 :deep(.highlighted-line) {
-  background-color: rgba(0, 212, 170, 0.08);
+  background-color: var(--highlight-line-bg, rgba(0, 212, 170, 0.08));
   border-left-color: var(--color-primary);
+}
+
+[data-theme="light"] .code-block-wrapper :deep(.highlighted-line) {
+  --highlight-line-bg: rgba(0, 168, 138, 0.08);
 }
 </style>
