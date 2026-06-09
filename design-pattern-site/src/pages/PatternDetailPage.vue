@@ -124,14 +124,11 @@ function goToPattern(id: string) {
       <section>
         <SectionTitle title="交互式动画演示" subtitle="Interactive Animation" icon="PlayCircle" />
         <PatternAnimator :steps="pattern.animationSteps" :current-step="currentStep" />
-        <div class="mt-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+        <div class="mt-4">
           <StepPlayer
             :total-steps="pattern.animationSteps.length"
             v-model:current-step="currentStep"
           />
-          <p class="text-sm text-primary font-medium max-w-md text-right">
-            {{ pattern.animationSteps[currentStep]?.description }}
-          </p>
         </div>
       </section>
 
